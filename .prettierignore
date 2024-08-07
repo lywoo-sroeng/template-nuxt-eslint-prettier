@@ -1,0 +1,13 @@
+#projectName/.prettierignore
+
+node_modules
+*.log*
+.nuxt
+.nitro
+.cache
+.output
+.env
+dist
+
+#Ignore prettier rules in files of a specific directory
+components/ui/
