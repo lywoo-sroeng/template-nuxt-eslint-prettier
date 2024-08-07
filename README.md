@@ -1,75 +1,127 @@
-# Nuxt 3 Minimal Starter
+# template-nuxt-eslint-prettier
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
-
-## Setup
-
-Make sure to install the dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
+This repository uses PNPM for development.
 
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
 pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+## Setup and Configuration
 
-Build the application for production:
+### Install dependencies
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+pnpm i -D eslint prettier eslint-config-prettier eslint-plugin-prettier typescript @typescript-eslint/parser @nuxtjs/eslint-config-typescript
 ```
 
-Locally preview production build:
+### ".eslintrc.cjs" file
 
 ```bash
-# npm
-npm run preview
+//projectName/.eslintrc.cjs
 
-# pnpm
-pnpm run preview
+module.exports = {
+  parser: 'vue-eslint-parser',
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+  },
+  extends: ['@nuxtjs/eslint-config-typescript', 'plugin:prettier/recommended'],
+  plugins: [],
 
-# yarn
-yarn preview
+  // Ignore eslint rules in file(s) of a specific directory
+  ignorePatterns: ['components/ui/', 'tailwind.config.js'],
 
-# bun
-bun run preview
+  rules: {
+    'no-lonely-if': 'off',
+    'comma-dangle': 'off',
+    'no-console': 'off',
+    'vue/no-v-html': 'off',
+    'vue/multi-word-component-names': 'off',
+    'vue/require-default-prop': 0,
+    '@typescript-eslint/consistent-type-imports': 'error',
+    'prettier/prettier': ['error', { printWidth: 95 }],
+  },
+}
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+### ".prettierignore" file
+
+```bash
+#projectName/.prettierignore
+
+node_modules
+*.log*
+.nuxt
+.nitro
+.cache
+.output
+.env
+dist
+
+#Ignore prettier rules in files of a specific directory
+components/ui/
+```
+
+### ".prettierrc" file
+
+Modify the file "projectName/.prettierrc"
+
+```bash
+{
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "semi": false,
+  "singleQuote": true,
+  "printWidth": 95,
+}
+```
+
+### "setting.json" file in VSCode editor
+
+```bash
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.requireConfig": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  }
+}
+```
+
+### Tailwind CSS for Nuxt
+
+```bash
+npm install -D @nuxtjs/tailwindcss
+```
+
+```bash
+//nuxt.config.ts
+
+export default defineNuxtConfig({
+  modules: ['@nuxtjs/tailwindcss']
+})
+```
+
+### Automatic Class Sorting with Prettier
+
+```bash
+pnpm i -D prettier prettier-plugin-tailwindcss
+```
+
+Modify the file "projectName/.prettierrc"
+
+```bash
+{
+  "plugins": ["prettier-plugin-tailwindcss"]
+}
+```
+
+### References
+
+- [Adding ESLint and Prettier to Nuxt 3](https://dev.to/tao/adding-eslint-and-prettier-to-nuxt-3-2023-5bg)
+- [Nuxt Tailwind](https://tailwindcss.nuxtjs.org/getting-started/installation)
+- [Automatic Class Sorting with Prettier](https://tailwindcss.com/blog/automatic-class-sorting-with-prettier)
